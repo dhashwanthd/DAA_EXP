@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Matrix Chain Multiplication{% endblock %}
+{% block content %}
+<h1><span class="exp-tag">Experiment 6</span>Matrix Chain Multiplication (DP)</h1>
+<p class="aim">Find the optimal parenthesization minimizing scalar multiplications using Dynamic Programming.</p>
+
+{% if error %}<div class="error">{{ error }}</div>{% endif %}
+
+<div class="card">
+  <form method="POST">
+    <label>Matrix dimensions p0,p1,...,pn (matrix i is p[i-1] x p[i])</label>
+    <input type="text" name="dims" value="{{ form.dims or '10,30,5,60,10' }}">
+    <button type="submit">Compute Optimal Order</button>
+  </form>
+</div>
+
+{% if result %}
+<div class="card">
+  <p><strong>Minimum scalar multiplications:</strong> <span class="badge">{{ result.min_cost }}</span></p>
+  <p><strong>Optimal parenthesization:</strong> {{ result.parenthesization }}</p>
+  <div class="result-title">DP Cost Table m[i][j]</div>
+  <table>
+    <tr><th></th>{% for l in result.labels %}<th>{{ l }}</th>{% endfor %}</tr>
+    {% for row in result.table %}
+    <tr><th>{{ result.labels[loop.index0] }}</th>{% for v in row %}<td>{{ v }}</td>{% endfor %}</tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif %}
+{% endblock %}
