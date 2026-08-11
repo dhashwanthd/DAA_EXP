@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Quick Sort{% endblock %}
+{% block content %}
+<h1><span class="exp-tag">Experiment 10</span>Deterministic vs Randomized Quick Sort</h1>
+<p class="aim">Compare standard Quick Sort against Randomized Quick Sort on different input distributions.</p>
+
+{% if error %}<div class="error">{{ error }}</div>{% endif %}
+
+<div class="card">
+  <form method="POST">
+    <label>Array size N (1 - 20000)</label>
+    <input type="number" name="n" value="{{ form.n or 2000 }}">
+    <label>Input type</label>
+    <select name="kind">
+      {% for k, label in [('random','Random'), ('sorted','Sorted'), ('reverse','Reverse Sorted'), ('nearly_sorted','Nearly Sorted')] %}
+      <option value="{{ k }}" {{ 'selected' if form.kind == k else '' }}>{{ label }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Run Sort</button>
+  </form>
+</div>
+
+{% if result %}
+<div class="card">
+  <p><strong>N:</strong> {{ result.n }} &nbsp; <strong>Input type:</strong> {{ result.kind }}</p>
+  <p><strong>Preview:</strong> {{ result.preview }}{{ ' ...' if result.truncated else '' }}</p>
+  <table>
+    <tr><th>Algorithm</th><th>Comparisons</th><th>Time (ms)</th></tr>
+    <tr><td>Deterministic Quick Sort</td><td>{{ result.deterministic.comparisons }}</td><td>{{ result.deterministic.time_ms }}</td></tr>
+    <tr><td>Randomized Quick Sort</td><td>{{ result.randomized.comparisons }}</td><td>{{ result.randomized.time_ms }}</td></tr>
+  </table>
+</div>
+{% endif %}
+{% endblock %}
