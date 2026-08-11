@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}DAA Mini Projects - Home{% endblock %}
+{% block content %}
+<h1>10 Mini Projects: Design &amp; Analysis of Algorithms</h1>
+<p class="aim">Each experiment from the lab manual is implemented as its own algorithm module with a matching page. Pick one from the sidebar or the list below, enter your own input, and run it.</p>
+<div class="card">
+  <ul class="exp-list">
+    {% for exp in experiments %}
+    <li>
+      <a href="{{ url_for(exp.endpoint) }}">{{ exp.number }}. {{ exp.title }}</a>
+      <span>{{ exp.aim }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
