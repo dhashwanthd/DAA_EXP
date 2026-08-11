@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{% block title %}DAA Mini Projects{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+  <a class="brand" href="{{ url_for('index') }}">DAA Algorithm Lab</a>
+  <span style="color:var(--muted); font-size:0.85rem;">AM5303 - Design &amp; Analysis of Algorithms</span>
+</header>
+<div class="layout">
+  <nav class="sidebar">
+    {% for exp in experiments %}
+    <a href="{{ url_for(exp.endpoint) }}" class="{{ 'active' if active == exp.endpoint else '' }}">{{ exp.number }}. {{ exp.short }}</a>
+    {% endfor %}
+  </nav>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</div>
+</body>
+</html>
