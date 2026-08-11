@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}String Matching{% endblock %}
+{% block content %}
+<h1><span class="exp-tag">Experiment 2</span>Naive vs Rabin-Karp vs KMP</h1>
+<p class="aim">Compare Naive, Rabin-Karp, and KMP string matching algorithms on text and pattern.</p>
+
+{% if error %}<div class="error">{{ error }}</div>{% endif %}
+
+<div class="card">
+  <form method="POST">
+    <label>Text</label>
+    <input type="text" name="text" value="{{ form.text or 'AABAACAADAABAABA' }}">
+    <label>Pattern</label>
+    <input type="text" name="pattern" value="{{ form.pattern or 'AABA' }}">
+    <button type="submit">Run Matching</button>
+  </form>
+</div>
+
+{% if result %}
+<div class="card">
+  <p><strong>Text:</strong> {{ result.text }}</p>
+  <p><strong>Pattern:</strong> {{ result.pattern }}</p>
+  <table>
+    <tr><th>Algorithm</th><th>Matches at</th><th>Comparisons</th></tr>
+    <tr><td>Naive</td><td>{{ result.naive.matches }}</td><td>{{ result.naive.comparisons }}</td></tr>
+    <tr><td>KMP</td><td>{{ result.kmp.matches }}</td><td>{{ result.kmp.comparisons }}</td></tr>
+    <tr><td>Rabin-Karp</td><td>{{ result.rabin_karp.matches }}</td><td>{{ result.rabin_karp.comparisons }}</td></tr>
+  </table>
+</div>
+{% endif %}
+{% endblock %}
