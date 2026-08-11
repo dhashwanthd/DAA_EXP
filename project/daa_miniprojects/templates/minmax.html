@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Min-Max Divide and Conquer{% endblock %}
+{% block content %}
+<h1><span class="exp-tag">Experiment 5</span>Min-Max via Divide and Conquer</h1>
+<p class="aim">Find min and max simultaneously using Divide and Conquer, compared against the naive linear scan.</p>
+
+{% if error %}<div class="error">{{ error }}</div>{% endif %}
+
+<div class="card">
+  <form method="POST">
+    <label>Array (comma separated)</label>
+    <input type="text" name="array" value="{{ form.array or '3,1,7,4,9,2,8,5,6,0' }}">
+    <button type="submit">Find Min/Max</button>
+  </form>
+</div>
+
+{% if result %}
+<div class="card">
+  <p><strong>Array:</strong> {{ result.array }}</p>
+  <p><strong>Min:</strong> <span class="badge">{{ result.min }}</span> &nbsp; <strong>Max:</strong> <span class="badge">{{ result.max }}</span></p>
+  <table>
+    <tr><th>Method</th><th>Comparisons</th></tr>
+    <tr><td>Divide and Conquer</td><td>{{ result.dc_comps }}</td></tr>
+    <tr><td>Naive</td><td>{{ result.naive_comps }}</td></tr>
+    <tr><td>Theoretical (3n/2 - 2)</td><td>{{ result.formula }}</td></tr>
+  </table>
+</div>
+{% endif %}
+{% endblock %}
