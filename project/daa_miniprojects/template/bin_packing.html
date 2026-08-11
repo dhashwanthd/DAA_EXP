@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Bin Packing{% endblock %}
+{% block content %}
+<h1><span class="exp-tag">Experiment 9</span>Bin Packing Approximation Algorithms</h1>
+<p class="aim">Compare First Fit, First Fit Decreasing, and Best Fit Decreasing bin packing heuristics.</p>
+
+{% if error %}<div class="error">{{ error }}</div>{% endif %}
+
+<div class="card">
+  <form method="POST">
+    <label>Items (comma separated, sizes as fraction of capacity)</label>
+    <input type="text" name="items" value="{{ form.items or '0.5,0.7,0.3,0.9,0.2,0.6,0.8,0.4,0.1,0.5' }}">
+    <label>Bin capacity</label>
+    <input type="text" name="capacity" value="{{ form.capacity or '1.0' }}">
+    <button type="submit">Pack Bins</button>
+  </form>
+</div>
+
+{% if result %}
+<div class="card">
+  <p><strong>Items:</strong> {{ result.item_list }}</p>
+  <p><strong>Sum of items:</strong> {{ result.item_sum }} &nbsp; <strong>Lower bound on bins:</strong> <span class="badge">{{ result.lower_bound }}</span></p>
+</div>
+<div class="grid">
+  {% for label, key in [('First Fit', 'ff'), ('First Fit Decreasing', 'ffd'), ('Best Fit Decreasing', 'bfd')] %}
+  <div class="card">
+    <div class="result-title">{{ label }} - {{ result[key].count }} bins</div>
+    <table>
+      <tr><th>Bin</th><th>Items</th><th>Used</th></tr>
+      {% for b in result[key].bins %}
+      <tr><td>{{ loop.index }}</td><td>{{ b.items }}</td><td>{{ b.used }} ({{ b.pct }}%)</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
